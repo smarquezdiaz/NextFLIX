@@ -1,10 +1,20 @@
-import { GetSerieResponse } from "../interfaces/getserie.interface";
+import { apiFetch } from "@/service/api";
+import { DeleteSerieResponse, PostSerieRequest, PostSerieResponse } from "../interfaces/postserie.interface";
 
-export async function getSeries(): Promise<GetSerieResponse[]> {
-  const response = await fetch("https://nestflix.onrender.com/series");
-  if (!response.ok) {
-    throw new Error("Error fetching the series");
-  }
-  const data = await response.json();
-  return data;
+export function getSeries() {
+  return apiFetch("/series");
+}
+
+export function postSerie(data: PostSerieRequest): Promise<PostSerieResponse> {
+  return apiFetch("/series", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+
+export function deleteSerie(id: number): Promise<DeleteSerieResponse> {
+  return apiFetch(`/series/${id}`, {
+    method: "DELETE",
+  });
 }

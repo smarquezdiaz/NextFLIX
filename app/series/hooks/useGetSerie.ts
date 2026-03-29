@@ -7,23 +7,29 @@ import { getSeries } from "../services/getserie.service";
 export function UseGetSerie() {
   const [series, setSeries] = useState<GetSerieResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null); 
+
+  const fetchSeries = async () => {
+    setLoading(true);
+    try {
+      const data = await getSeries();
+      setSeries(data);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error(String(err)));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getSeries()
-      .then((data) => {
-        setSeries(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
+    fetchSeries();
   }, []);
 
-  return { 
-    series, 
+  return {
+    series,
     loading,
-    error
-  }
+    error,
+    refetch: fetchSeries, 
+  };
 }

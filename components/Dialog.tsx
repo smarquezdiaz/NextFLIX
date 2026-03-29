@@ -9,6 +9,8 @@ type DialogProps = {
   image?: string;
   footer?: React.ReactNode;
   size?: "sm" | "md" | "lg";
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export default function Dialog({
@@ -19,6 +21,8 @@ export default function Dialog({
   image,
   footer,
   size = "md",
+  open,
+  onOpenChange,
 }: DialogProps) {
   const sizes = {
     sm: "w-[350px]",
@@ -26,7 +30,7 @@ export default function Dialog({
     lg: "w-[700px]",
   };
   return (
-    <DialogPrimitive.Root>
+    <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm" />

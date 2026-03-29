@@ -4,8 +4,8 @@ type Serie = {
   id: number;
   titulo: string;
   sinopsis: string;
-  image: string;
-  calificacion: string;
+  urlPortada: string;
+  calificacion: number;
 };
 
 type Props = {
@@ -19,7 +19,7 @@ export default function SerieDetailModal({ serie, trigger }: Props) {
       trigger={trigger}
       titulo={serie.titulo}
       sinopsis={serie.sinopsis}
-      image={serie.image}
+      image={serie.urlPortada}
       size="md"
       footer={<p className="font-semibold text-lg">${serie.calificacion}</p>}
     >
